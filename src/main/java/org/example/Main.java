@@ -2,7 +2,9 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.example.entities.Employee;
+import org.example.entities.Product;
+import org.example.entities.Student;
+import org.example.entities.keys.StudentKey;
 import org.example.persistence.CustomPersistenceUnitInfo;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
@@ -15,7 +17,11 @@ public class Main {
     public static void main(String[] args) {
 
         String puName = "pu-name";
-        Map<?, ?> props = new HashMap<>();
+        Map<String, String> props = new HashMap<>();
+        props.put("hibernate.show_sql", "true");
+        props.put("hibernate.hbm2ddl.auto", "create");
+
+
 
 
         EntityManagerFactory emf = new HibernatePersistenceProvider()
@@ -26,7 +32,44 @@ public class Main {
         try {
             em.getTransaction().begin();
 
-            Employee e1 = em.find(Employee.class, 1);
+//            Product p1 = new Product();
+//            p1.setCode("ABC");
+//            p1.setNumber(10);
+//            p1.setColor("Red");
+//
+//            em.persist(p1);
+
+            StudentKey id = new StudentKey();
+            id.setCode("ABC");
+            id.setNumber(10);
+
+            Student s = new Student();
+            s.setId(id);
+            s.setName("Saran");
+
+            em.persist(s);
+
+            System.out.println(s);
+
+
+            em.getTransaction().commit(); // end of transaction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//            Employee e1 = em.find(Employee.class, 1);
 //            e1.setName("Rahul");
 //            e1.setName("Saran");
 //            e1.setName("King");
@@ -34,18 +77,18 @@ public class Main {
             //  Marks the managed entity for deletion(but still stays in persistence context); actual DELETE happens on transaction commit
             // em.remove(e1);
 
-            Employee e2 = new Employee();
-            e2.setId(1);
-            e2.setName("Saran");
-            e2.setAddress("Shapoorji");
+//            Employee e2 = new Employee();
+//            e2.setId(3);
+//            e2.setName("King");
+//            e2.setAddress("Memari");
             // If a row with id = 1 already exists in the database
             // It will throw EntityExistsException or database constraint error (duplicate primary key).
             // Makes this new entity managed (stores in persistence context) and schedules it for insertion into the database
-            em.persist(e2);
+//            em.persist(e2);
 
 //            System.out.println(e1);
 
-            em.getTransaction().commit(); // end of transaction
+//            em.getTransaction().commit(); // end of transaction
 
         } finally {
             em.close();
