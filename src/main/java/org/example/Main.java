@@ -2,6 +2,8 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.example.entities.Passport;
+import org.example.entities.Person;
 import org.example.entities.Product;
 import org.example.entities.Student;
 import org.example.entities.keys.StudentKey;
@@ -32,6 +34,39 @@ public class Main {
         try {
             em.getTransaction().begin();
 
+
+            Person person = new Person();
+            person.setName("Saran");
+
+            Passport passport = new Passport();
+            passport.setNumber("ABC123");
+
+            person.setPassport(passport);
+            passport.setPerson(person);
+
+            em.persist(person);
+//            em.persist(passport);
+
+            System.out.println(person);
+
+
+            em.getTransaction().commit();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //            Product p1 = new Product();
 //            p1.setCode("ABC");
 //            p1.setNumber(10);
@@ -39,20 +74,20 @@ public class Main {
 //
 //            em.persist(p1);
 
-            StudentKey id = new StudentKey();
-            id.setCode("ABC");
-            id.setNumber(10);
+//            StudentKey id = new StudentKey();
+//            id.setCode("ABC");
+//            id.setNumber(10);
+//
+//            Student s = new Student();
+//            s.setId(id);
+//            s.setName("Saran");
+//
+//            em.persist(s);
+//
+//            System.out.println(s);
 
-            Student s = new Student();
-            s.setId(id);
-            s.setName("Saran");
 
-            em.persist(s);
-
-            System.out.println(s);
-
-
-            em.getTransaction().commit(); // end of transaction
+//            em.getTransaction().commit(); // end of transaction
 
 
 
